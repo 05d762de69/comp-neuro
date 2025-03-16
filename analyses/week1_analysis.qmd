@@ -1,0 +1,90 @@
+---
+title: "Week 1 - Computational Neuroscience Journey"
+author: "Hannes"
+date: 03/16/2025
+format: 
+  html:
+    self-contained: true
+editor: visual
+execute: 
+  echo: true
+  cache: true
+---
+
+## Introduction Week 1
+
+With the ChatGPT DeepResearch feature I created a plan to get me more comfortable with computational neuroscience topic, while improving my R skills. The first week focused on freshening up my Linear Algebra skills, setting up a GitHub, doing some basic computations with matrices, and writing this Quarto doc.
+
+## Linear Algebra
+
+This week I mainly focused on freshening my Linear Algebra skills. This involved watching an MIT Lecture [The Geometry of Linear Equations](https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/the-geometry-of-linear-equations/) and starting a KhanAcademy course.
+
+## GitHub
+
+Setting up the GitHub was pretty straightforward, although I know that there are millions of features and functions that I did not use, nor will ever use. For now I have my own repository, know how to push and pull stuff, and have a general understanding of how to structure it.
+
+## Coding Examples
+
+Computationally speaking, this week was pretty easy. I tinkered around with matrices and applied what I had learned in the lecture and KhanAcademy. Below you can find some of the functions that I applied - basic stuff.
+
+First I imported a bunch of libraries, some of them e.g. Matrix, I am not even sure I needed.
+
+```{r}
+#| label: load-packages
+
+library(Matrix)
+library(random)
+library(matlib)
+library(ggplot2)
+```
+
+Then I created a bunch of random numbers to fill my matrices.
+
+```{r}
+#| label: random-numbers
+rnd1 <- randomNumbers(n=6, col=2, min=0, max=100, base=10)
+rnd2 <- randomNumbers(n=9, col=3, min=0, max=100, base=10)
+rnd3 <- randomNumbers(n=6, col=3, min=0, max=100, base=10)
+```
+
+I then initialized Matrices from these numbers.
+
+```{r}
+#| label: matrix-initialization
+m1 <- matrix(data=rnd1, nrow=3, ncol=2)
+m2 <- matrix(data=rnd2, nrow=3, ncol=3)
+m3 <- matrix(data=rnd3, nrow=2, ncol=3)
+```
+
+Then I performed a couple of basic matrix operations. Most of them were in the `base` package of R.
+
+```{r}
+#| label: matrix-operations
+m1_transpose <- t(m1) #Transposing a matrix might come in handy for data manipulation
+m2_inverse <- solve(m2) # Computing the inverse of a matrix
+m4 <- m3 %*% m1 #Multiplying two matrices
+```
+
+Finally I wanted to visualize create a basic visualization of random values in a scatter plot. I thought - hey, let's choose the already existing matrix for this. Turned out, `ggplot2` does not really like Matrix as data input. Therefore, I first had to convert it to a dataframe.
+
+```{r}
+#| label: dataframe
+dataframe_data = as.data.frame(m1)
+```
+
+After that it was smooth sailing. It took me a while to figure out that `ggplot2` follows a layered approach, but after that it worked out nicely.
+
+```{r}
+#| label: scatterplot
+#| echo: false
+#| fig-cap: "Random Numbers in a Scatter Plot"
+
+ggplot(dataframe_data, aes(x = V1, y = V2)) + 
+  geom_line()+
+  geom_point()+
+  theme_minimal()
+```
+
+## References
+
+[The Geometry of Linear Equations](https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/the-geometry-of-linear-equations/)
